@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:;"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OrderX Print Agent</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <img class="mark" src="./icon.svg" alt="OrderX" />
+        <div>
+          <h1>OrderX Print Agent</h1>
+          <p>Local thermal print service for POS Web</p>
+        </div>
+      </header>
+
+      <section class="card" id="pair-card">
+        <div class="row">
+          <h2>Pairing</h2>
+          <span class="badge" id="pair-badge">Not paired</span>
+        </div>
+        <p class="copy" id="pair-copy">
+          Enter the code from POS Web → Settings → Printers, then Confirm. The
+          local service starts automatically.
+        </p>
+        <form id="pair-form">
+          <label for="pair-code">Pairing code</label>
+          <input
+            id="pair-code"
+            name="code"
+            maxlength="8"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="ABC123"
+          />
+          <button type="button" id="pair-submit">Confirm</button>
+        </form>
+        <button type="button" class="secondary" id="unpair-button" hidden>
+          Unpair
+        </button>
+        <p class="hint" id="pair-hint"></p>
+      </section>
+
+      <p class="footer">
+        Closing this window hides the agent in the tray. Unpair stops the local
+        service.
+      </p>
+    </main>
+    <script src="./renderer.js"></script>
+  </body>
+</html>

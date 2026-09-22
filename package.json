@@ -1,0 +1,130 @@
+{
+  "name": "pos-print-agent",
+  "productName": "OrderX Print Agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local Electron service that prints OrderX receipts and KOTs to thermal printers.",
+  "main": "dist/electron/main.js",
+  "author": {
+    "name": "OrderX",
+    "email": "support@orderx.com"
+  },
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mamirhamzadev/orderx-print-agent.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && electron .",
+    "dev": "npm start",
+    "service": "npm run build && node dist/service/standalone.js",
+    "dist": "npm run dist:win",
+    "release": "npm run release:win",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "dist:all": "npm run build && electron-builder -mwl",
+    "release:win": "npm run build && electron-builder --win --publish always",
+    "release:mac": "npm run build && electron-builder --mac --publish always",
+    "release:linux": "npm run build && electron-builder --linux --publish always",
+    "release:all": "npm run build && electron-builder -mwl --publish always"
+  },
+  "build": {
+    "appId": "com.orderx.printagent",
+    "productName": "OrderX Print Agent",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "ui/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "OrderX Print Agent"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "mamirhamzadev",
+      "repo": "orderx-print-agent",
+      "releaseType": "draft"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.png",
+      "category": "public.app-category.business"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.png",
+      "category": "Utility",
+      "syncDesktopName": true,
+      "maintainer": "OrderX <support@orderx.com>"
+    }
+  },
+  "dependencies": {
+    "pngjs": "^7.0.0",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.1",
+    "@types/pngjs": "^6.0.5",
+    "@types/ws": "^8.18.1",
+    "electron": "^38.1.2",
+    "electron-builder": "^26.15.3",
+    "typescript": "^5.9.2"
+  },
+  "allowScripts": {
+    "electron@38.8.6": true
+  },
+  "desktopName": "pos-print-agent.desktop"
+}

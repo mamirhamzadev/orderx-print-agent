@@ -1,0 +1,164 @@
+:root {
+  --primary: #13ae85;
+  --primary-soft: #e9f7f4;
+  --black: #141414;
+  --light-black: #484c5a;
+  --black-100: #f5f4f6;
+  --black-500: #dfdee0;
+  --black-600: #90939e;
+  --white: #ffffff;
+  --error: #c0272d;
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--black-100);
+  color: var(--black);
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.shell {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 28px 22px 24px;
+}
+
+.hero {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.mark {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.hero p,
+.copy,
+.meta,
+.hint,
+.footer {
+  margin: 4px 0 0;
+  color: var(--light-black);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--black-500);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--black-100);
+  color: var(--light-black);
+}
+
+.badge.ok {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.badge.warn {
+  background: #fff4e5;
+  color: #b45309;
+}
+
+.error {
+  color: var(--error);
+  font-size: 12px;
+  margin: 8px 0 0;
+}
+
+.hint.error {
+  color: var(--error);
+}
+
+label {
+  display: block;
+  margin: 14px 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--light-black);
+}
+
+input {
+  width: 100%;
+  border: 1px solid var(--black-500);
+  border-radius: 10px;
+  padding: 11px 12px;
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+input:focus {
+  outline: 2px solid var(--primary);
+  border-color: var(--primary);
+}
+
+button {
+  margin-top: 12px;
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 14px;
+  background: var(--primary);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: var(--white);
+  color: var(--black);
+  border: 1px solid var(--black-500);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.footer {
+  text-align: center;
+  color: var(--black-600);
+}
