@@ -31,7 +31,10 @@
     "release:win": "npm run build && electron-builder --win --publish always",
     "release:mac": "npm run build && electron-builder --mac --publish always",
     "release:linux": "npm run build && electron-builder --linux --publish always",
-    "release:all": "npm run build && electron-builder -mwl --publish always"
+    "release:all": "npm run build && electron-builder -mwl --publish always",
+    "push:release": "node scripts/push-release.js",
+    "release:patch": "npm version patch && git push --follow-tags",
+    "release:minor": "npm version minor && git push --follow-tags"
   },
   "build": {
     "appId": "com.orderx.printagent",
