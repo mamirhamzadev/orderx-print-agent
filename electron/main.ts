@@ -37,10 +37,7 @@ let idleStopTimer: NodeJS.Timeout | null = null;
 
 const HIDDEN_LAUNCH_FLAG = "--hidden";
 
-const startedHidden = (): boolean =>
-  process.argv.includes(HIDDEN_LAUNCH_FLAG) ||
-  app.getLoginItemSettings().wasOpenedAtLogin ||
-  app.getLoginItemSettings().wasOpenedAsHidden;
+const startedHidden = (): boolean => process.argv.includes(HIDDEN_LAUNCH_FLAG);
 
 const registerStartWithWindows = (): void => {
   if (process.platform !== "win32") {
@@ -122,6 +119,8 @@ const showWindow = (): void => {
   }
   mainWindow.show();
   mainWindow.focus();
+  mainWindow.setAlwaysOnTop(true);
+  mainWindow.setAlwaysOnTop(false);
 };
 
 const updateTrayMenu = (): void => {
@@ -180,9 +179,14 @@ const createWindow = (visible: boolean): void => {
 
   mainWindow.on("close", (event) => {
     if (!quitting) {
-      event.preventDefault();
-      mainWindow?.setSkipTaskbar(true);
-      mainWindow?.hide();
+      if (isPaired()) {
+        event.preventDefault();
+        mainWindow?.setSkipTaskbar(true);
+        mainWindow?.hide();
+      } else {
+        quitting = true;
+        app.quit();
+      }
     }
   });
 
@@ -223,23 +227,17 @@ if (!gotLock) {
 
   app.whenReady().then(async () => {
     app.setName("OrderX Print Agent");
+    try {
+      app.setAsDefaultProtocolClient("orderx-print-agent");
+    } catch {}
     initAuth(app.getPath("userData"));
     registerIpc();
     onStatusChange((status) => {
       pushStatus(status);
-      if (!status.paired && !status.pendingPairing) {
-        stopServiceIfIdle();
-      }
     });
-    createTray();
-    createWindow(!startedHidden());
-    registerStartWithWindows();
+
     try {
-      if (isPaired()) {
-        await startLocalService();
-      } else {
-        pushStatus(getStatusSnapshot());
-      }
+      await startLocalService();
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       pushStatus({
@@ -247,6 +245,16 @@ if (!gotLock) {
         lastError: message,
       });
     }
+
+    createWindow(!startedHidden());
+
+    try {
+      createTray();
+    } catch {}
+
+    try {
+      registerStartWithWindows();
+    } catch {}
   });
 
   app.on("before-quit", (event) => {
