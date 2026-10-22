@@ -40,7 +40,7 @@ const HIDDEN_LAUNCH_FLAG = "--hidden";
 const startedHidden = (): boolean => process.argv.includes(HIDDEN_LAUNCH_FLAG);
 
 const registerStartWithWindows = (): void => {
-  if (process.platform !== "win32") {
+  if (process.platform !== "win32" || !app.isPackaged) {
     return;
   }
   app.setLoginItemSettings({
